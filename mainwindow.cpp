@@ -36,7 +36,7 @@
 #include "loginform.h"
 
 
-#define CONFIG_FILE_PATH "/etc/lightdm/lightdm-razor-greeter.conf"
+#define CONFIG_FILE_PATH "/etc/lightdm/lxqt-lightdm-greeter.conf"
 #define BACKGROUND_IMAGE_KEY "greeter-background-image"
 #define LOGINFORM_OFFSETX_KEY "loginform-offset-x"
 #define LOGINFORM_OFFSETY_KEY "loginform-offset-y"

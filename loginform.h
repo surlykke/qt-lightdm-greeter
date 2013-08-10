@@ -31,8 +31,8 @@
 #include <QtGui/QDialog>
 #include <QtGui/QKeyEvent>
 #include <QGraphicsOpacityEffect>
+#include <lxqt/powermanager.h>
 #include "logindata.h"
-#include "powermanager.h"
 
 namespace Ui {
 class LoginForm;

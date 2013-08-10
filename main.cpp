@@ -25,15 +25,13 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
+#include <lxqt/razorapplication.h>
 #include "mainwindow.h"
-#include "razortranslate.h"
-#include "razorapplication.h"
 
 
 int main(int argc, char *argv[])
 {
     RazorApplication a(argc, argv);
-    TRANSLATE_APP;
 
     MainWindow *focusWindow = 0;
     for (int i = 0; i < QApplication::desktop()->screenCount(); ++i)

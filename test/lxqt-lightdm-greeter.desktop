@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Razor LightDM Greeter
+Name=LXQT LightDM Greeter
 Comment=This runs the Razor LightDM greeter, it should only be run from LightDM
-Exec=razor-lightdm-greeter
+Exec=${CMAKE_CURRENT_BINARY_DIR}/lxqt-lightdm-greeter
 Type=Application
 X-Ubuntu-Gettext-Domain=lightdm
