@@ -25,13 +25,13 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
-#include <lxqt/razorapplication.h>
+#include <lxqt/lxqtapplication.h>
 #include "mainwindow.h"
 
 
 int main(int argc, char *argv[])
 {
-    RazorApplication a(argc, argv);
+    LxQt::Application a(argc, argv);
 
     MainWindow *focusWindow = 0;
     for (int i = 0; i < QApplication::desktop()->screenCount(); ++i)

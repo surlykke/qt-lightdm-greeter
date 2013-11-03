@@ -7,14 +7,14 @@ include ( ${QT_USE_FILE} )
 
 include(FindPkgConfig)
 message(STATUS "Checking for lightdm-qt...")
-pkg_check_modules(LIGHTDM_QT liblightdm-qt-2)
+pkg_check_modules(LIGHTDM_QT liblightdm-qt-3)
 
 if (NOT LIGHTDM_QT_INCLUDE_DIRS)
-    message(FATAL "liblightdm-qt-2 include directory not found")
+    message(FATAL "liblightdm-qt-3 include directory not found")
 endif (NOT LIGHTDM_QT_INCLUDE_DIRS)
     
 if (NOT LIGHTDM_QT_LIBRARIES)
-    message(FATAL "lightdm-qt-2 library not found")
+    message(FATAL "lightdm-qt-3 library not found")
 endif (NOT LIGHTDM_QT_LIBRARIES)
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}

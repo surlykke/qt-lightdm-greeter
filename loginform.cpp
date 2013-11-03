@@ -37,7 +37,7 @@
 #include <QtGui/QMessageBox>
 #include <QtGui/QMenu>
 #include <QtCore/QProcess>
-#include <lxqt/razorsettings.h>
+#include <lxqt/lxqtsettings.h>
 
 LoginForm::LoginForm(QWidget *parent) : 
     QWidget(parent), 

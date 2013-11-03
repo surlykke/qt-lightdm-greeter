@@ -33,10 +33,6 @@
 
 #include <QLightDM/Greeter>
 
-#define LAST_USER_FILE "/var/lib/razor-lightdm-greeter/last-user"
-#define LAST_USER_KEY "last-user"
-#define CONFIG_FILE "/etc/lightdm/lightdm-razor-greeter.conf"
-
 class LoginData : public QObject
 {
     Q_OBJECT

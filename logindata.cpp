@@ -28,14 +28,11 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QSettings>
-#include <lightdm-qt-2/QLightDM/greeter.h>
+#include <QLightDM/greeter.h>
 #include <qtxdg/xdgdirs.h>
 
 #include "logindata.h"
-
-#define DATA_DIR "razor-lightdm-greeter"
-#define LAST_USER_KEY "last-user"
-#define CONFIG_FILE "/etc/lightdm/lightdm-razor-greeter.conf"
+#include "constants.h"
 
 
 
@@ -139,7 +136,7 @@ int LoginData::suggestedSession()
 
     for (int i = 0; i < numberOfSessions(); i++)
     {
-        if (sessionName(i) == "razor")
+        if (sessionName(i) == "lxqt")
         {
             suggestedSessionIndex = i;
             break;
