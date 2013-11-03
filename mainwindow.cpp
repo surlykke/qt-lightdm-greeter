@@ -31,16 +31,12 @@
 #include <QString>
 #include <QDebug>
 
-#include <razorqt/razorsettings.h>
+#include <lxqt/lxqtsettings.h>
 #include "mainwindow.h"
 #include "loginform.h"
+#include "constants.h"
 
-
-#define CONFIG_FILE_PATH "/etc/lightdm/lxqt-lightdm-greeter.conf"
-#define BACKGROUND_IMAGE_KEY "greeter-background-image"
-#define LOGINFORM_OFFSETX_KEY "loginform-offset-x"
-#define LOGINFORM_OFFSETY_KEY "loginform-offset-y"
-
+using namespace LxQt;
 
 MainWindow::MainWindow(int screen, QWidget *parent)
     : QWidget(parent),
@@ -100,7 +96,7 @@ void MainWindow::setFocus(Qt::FocusReason reason)
 int MainWindow::getOffset(QString key, int maxVal)
 {
 
-    QSettings greeterSettings(CONFIG_FILE_PATH, QSettings::IniFormat);
+    QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
     int offset = maxVal/2;
     if (greeterSettings.contains(key)) 
     {
@@ -131,7 +127,7 @@ int MainWindow::getOffset(QString key, int maxVal)
 void MainWindow::setBackgroundImage()
 {
     QImage backgroundImage;
-    QSettings greeterSettings(CONFIG_FILE_PATH, QSettings::IniFormat);
+    QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
     
     if (greeterSettings.contains(BACKGROUND_IMAGE_KEY))
     {

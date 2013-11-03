@@ -31,7 +31,7 @@
 #include <QtGui/QDialog>
 #include <QtGui/QKeyEvent>
 #include <QGraphicsOpacityEffect>
-#include <lxqt/powermanager.h>
+#include <lxqt/lxqtpowermanager.h>
 #include "logindata.h"
 
 namespace Ui {
@@ -68,7 +68,7 @@ private:
     Ui::LoginForm *ui;
     QLightDM::Greeter m_Greeter; 
     LoginData m_LoginData;
-    PowerManager m_powerManager;
+    LxQt::PowerManager m_powerManager;
     
     int m_otherUserComboIndex;
     QString m_user;
