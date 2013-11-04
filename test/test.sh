@@ -1,7 +1,7 @@
 # BEGIN_COMMON_COPYRIGHT_HEADER
 # (c)LGPL2+
 #
-# Razor - a lightweight, Qt based, desktop toolset
+# LXDE-Qt - a lightweight, Qt based, desktop toolset
 # http://razor-qt.org
 #
 # Copyright: 2012 Christian Surlykke
@@ -23,6 +23,6 @@
 #
 # END_COMMON_COPYRIGHT_HEADER
 #!/bin/sh
-# Runs lightdm with razor-lightdm-greeter in Xephyr. You must have Xephyr installed to run this
+# Runs lightdm with lxqt-lightdm-greeter in Xephyr. You must have Xephyr installed to run this
 TESTDIR="${CMAKE_CURRENT_BINARY_DIR}/test"
 lightdm --test-mode --debug --config=$TESTDIR/lightdm.conf --xgreeters-dir=$TESTDIR

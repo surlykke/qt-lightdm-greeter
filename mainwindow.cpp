@@ -1,7 +1,7 @@
 /* BEGIN_COMMON_COPYRIGHT_HEADER
  * (c)LGPL2+
  *
- * Razor - a lightweight, Qt based, desktop toolset
+ * LXDE-Qt - a lightweight, Qt based, desktop toolset
  * http://razor-qt.org
  *
  * Copyright: 2012 Christian Surlykke
@@ -143,7 +143,7 @@ void MainWindow::setBackgroundImage()
     
     if (backgroundImage.isNull())
     {
-        backgroundImage = QImage(razorTheme.desktopBackground(m_Screen));
+        backgroundImage = QImage(lxqtTheme.desktopBackground(m_Screen));
     }
 
     QPalette palette;

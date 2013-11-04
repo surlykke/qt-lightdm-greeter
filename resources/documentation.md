@@ -1,15 +1,15 @@
 [LightDM](http://www.freedesktop.org/wiki/Software/LightDM) is new 
-[Display Manager](http://en.wikipedia.org/wiki/X_display_manager_%28program_type%29) (DM) which seems to be widely adopted across distributions. It is not required to use LightDM at all Razor-qt will work out of the box from most displaymanagers
+[Display Manager](http://en.wikipedia.org/wiki/X_display_manager_%28program_type%29) (DM) which seems to be widely adopted across distributions. It is not required to use LightDM at all LxQt-qt will work out of the box from most displaymanagers
 
-### How to enable razor's lightdm greeter
+### How to enable lxqt's lightdm greeter
 
 Update or insert in(to) your `/etc/lightdm/lightdm.conf`, in the `SeatDefaults` section, this line:
 
-    greeter-session=lightdm-razor-greeter
+    greeter-session=lightdm-lxqt-greeter
 
-### Configure lightdm-razor-greeter
+### Configure lightdm-lxqt-greeter
 
-The file `/etc/lightdm/lightdm-razor-greeter.conf` allows for a few configurations of lightdm-razor-greeter (background-image, positioning of loginform). The configuration options are documented in that file.
+The file `/etc/lightdm/lightdm-lxqt-greeter.conf` allows for a few configurations of lightdm-lxqt-greeter (background-image, positioning of loginform). The configuration options are documented in that file.
 
 ### OpenSUSE Specific Notes
 
