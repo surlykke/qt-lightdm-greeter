@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
-    <height>396</height>
+    <width>240</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="font">
@@ -22,10 +22,10 @@
   <widget class="QFrame" name="formFrame">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>30</y>
-     <width>271</width>
-     <height>361</height>
+     <x>10</x>
+     <y>10</y>
+     <width>220</width>
+     <height>360</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -34,48 +34,80 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
-     <number>60</number>
+     <number>10</number>
     </property>
-    <item row="0" column="1">
-     <widget class="QLabel" name="hostnameLabel">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>10000</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Bitstream Vera Sans</family>
-        <pointsize>18</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Chr-pc</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <property name="indent">
-       <number>10</number>
-      </property>
-     </widget>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="hostnameLabel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>10000</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bitstream Vera Sans</family>
+          <pointsize>18</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Chr-pc</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="indent">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="iconLabel">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>resources/helix_1120.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="1" column="1">
+    <item>
      <widget class="QComboBox" name="userCombo">
       <property name="minimumSize">
        <size>
@@ -98,7 +130,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item>
      <widget class="QLineEdit" name="otherUserInput">
       <property name="minimumSize">
        <size>
@@ -124,7 +156,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item>
      <widget class="QLineEdit" name="passwordInput">
       <property name="minimumSize">
        <size>
@@ -153,7 +185,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="loginButton">
@@ -199,7 +231,7 @@
       </item>
      </layout>
     </item>
-    <item row="6" column="1">
+    <item>
      <widget class="QComboBox" name="sessionCombo">
       <property name="minimumSize">
        <size>
@@ -223,40 +255,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QLabel" name="iconLabel">
-   <property name="geometry">
-    <rect>
-     <x>14</x>
-     <y>6</y>
-     <width>80</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>10000</width>
-     <height>10000</height>
-    </size>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>resources/rqt-2.png</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
   </widget>
  </widget>
  <resources/>

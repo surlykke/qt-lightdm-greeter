@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/rqt-2.png</file>
+        <file>resources/helix_1120.png</file>
     </qresource>
 </RCC>
