@@ -115,8 +115,6 @@ void LoginForm::setupConnections()
     connect(ui->userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userComboCurrentIndexChanged()));
     connect(ui->otherUserInput, SIGNAL(editingFinished()), this, SLOT(otherUserEditingFinished()));
     connect(ui->loginButton, SIGNAL(clicked(bool)), this, SLOT(loginClicked()));
-    connect(ui->leaveButton, SIGNAL(clicked()), this, SLOT(leaveClicked()));
-
 
     connect(&m_Greeter, SIGNAL(showPrompt(QString,QLightDM::Greeter::PromptType)),
             this,       SLOT(onPrompt(QString,QLightDM::Greeter::PromptType)));
