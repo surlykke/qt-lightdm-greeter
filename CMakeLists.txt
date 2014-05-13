@@ -90,11 +90,7 @@ file(GLOB CONFIG_FILES resources/*.conf)
 install(TARGETS ${PROJECT} RUNTIME DESTINATION bin)
 install(FILES   ${DESKTOP_FILES}   DESTINATION /usr/share/xgreeters)
 
-if (BACKUP_CONFIGS)
-    # Use execute_process with 'cp' rather than cmake's install as I couldn't figure out how to make
-    # install create a backup of destination.
-    install(CODE "execute_process(COMMAND cp -v -u --backup=numbered \"${CONFIG_FILES}\" /etc/lightdm)")
-else()
+if (NOT KEEP_CONFIGS)
     install(FILES ${CONFIG_FILES} DESTINATION /etc/lightdm)
 endif()
 
