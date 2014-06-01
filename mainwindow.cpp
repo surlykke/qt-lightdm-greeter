@@ -31,7 +31,7 @@
 #include <QString>
 #include <QDebug>
 
-#include <lxqt/lxqtsettings.h>
+#include <LXQt/Settings>
 #include "mainwindow.h"
 #include "loginform.h"
 #include "constants.h"

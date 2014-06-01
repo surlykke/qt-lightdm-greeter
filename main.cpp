@@ -25,7 +25,7 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
-#include <lxqt/lxqtapplication.h>
+#include <LXQt/Application>
 #include "mainwindow.h"
 
 

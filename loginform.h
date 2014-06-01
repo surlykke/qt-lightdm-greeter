@@ -31,7 +31,7 @@
 #include <QtGui/QDialog>
 #include <QtGui/QKeyEvent>
 #include <QGraphicsOpacityEffect>
-#include <lxqt/lxqtpowermanager.h>
+#include <LXQt/PowerManager>
 #include "logindata.h"
 
 namespace Ui {
