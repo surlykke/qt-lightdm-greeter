@@ -5,6 +5,9 @@ project(${PROJECT})
 find_package ( Qt4 REQUIRED )
 include ( ${QT_USE_FILE} )
 
+find_package(LXQT REQUIRED )
+include(${LXQT_USE_FILE})
+
 include(FindPkgConfig)
 message(STATUS "Checking for lightdm-qt...")
 pkg_check_modules(LIGHTDM_QT liblightdm-qt-3)
