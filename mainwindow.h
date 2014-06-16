@@ -47,10 +47,10 @@ public:
 
     bool showLoginForm();
 
-    LoginForm* loginForm() { return m_LoginForm; };
+    LoginForm* loginForm() { return m_LoginForm;}
 private:
-    int getOffset(QString key, int maxVal);
-    void setBackgroundImage(); 
+    int getOffset(QString key, int maxVal, int defaultVal);
+    void setBackground();
     int m_Screen;
     LoginForm* m_LoginForm;
 };

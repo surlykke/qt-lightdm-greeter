@@ -48,16 +48,20 @@ MainWindow::MainWindow(int screen, QWidget *parent)
     QRect screenRect = QApplication::desktop()->screenGeometry(screen);
     setGeometry(screenRect);
 
-    setBackgroundImage();    
+    setBackground();
 
     // display login dialog only in the main screen
     
     if (showLoginForm())
     {
         m_LoginForm = new LoginForm(this);
-        
-        int offsetX = getOffset(LOGINFORM_OFFSETX_KEY, screenRect.width() - m_LoginForm->width());
-        int offsetY = getOffset(LOGINFORM_OFFSETY_KEY, screenRect.height() - m_LoginForm->height());
+
+        int maxX = screenRect.width() - m_LoginForm->width();
+        int maxY = screenRect.height() - m_LoginForm->height();
+        int defaultX = 90*maxX/100;
+        int defaultY = 50*maxY/100;
+        int offsetX = getOffset(LOGINFORM_OFFSETX_KEY, maxX, defaultX);
+        int offsetY = getOffset(LOGINFORM_OFFSETY_KEY, maxY, defaultY);
         
         m_LoginForm->move(offsetX, offsetY);
         m_LoginForm->show();
@@ -93,11 +97,12 @@ void MainWindow::setFocus(Qt::FocusReason reason)
     }
 }
 
-int MainWindow::getOffset(QString key, int maxVal)
+int MainWindow::getOffset(QString key, int maxVal, int defaultVal)
 {
 
     QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
-    int offset = maxVal/2;
+    int offset = defaultVal > maxVal ? maxVal : defaultVal;
+
     if (greeterSettings.contains(key)) 
     {
         QString offsetAsString = greeterSettings.value(key).toString();
@@ -124,7 +129,7 @@ int MainWindow::getOffset(QString key, int maxVal)
     return offset;
 }
 
-void MainWindow::setBackgroundImage()
+void MainWindow::setBackground()
 {
     QImage backgroundImage;
     QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
@@ -141,16 +146,17 @@ void MainWindow::setBackgroundImage()
              
     }
     
-    if (backgroundImage.isNull())
-    {
-        backgroundImage = QImage(lxqtTheme.desktopBackground(m_Screen));
-    }
-
     QPalette palette;
     QRect rect = QApplication::desktop()->screenGeometry(m_Screen);
-    QBrush brush(backgroundImage.scaled(rect.width(), rect.height()));
-    palette.setBrush(this->backgroundRole(), brush); 
-    
+    if (backgroundImage.isNull())
+    {
+        palette.setColor(QPalette::Background, Qt::black);
+    }
+    else
+    {
+        QBrush brush(backgroundImage.scaled(rect.width(), rect.height()));
+        palette.setBrush(this->backgroundRole(), brush);
+    }
     this->setPalette(palette);
 }
 
