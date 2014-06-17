@@ -59,7 +59,7 @@ MainWindow::MainWindow(int screen, QWidget *parent)
 
         int maxX = screenRect.width() - m_LoginForm->width();
         int maxY = screenRect.height() - m_LoginForm->height();
-        int defaultX = 90*maxX/100;
+        int defaultX = 10*maxX/100;
         int defaultY = 50*maxY/100;
         int offsetX = getOffset(LOGINFORM_OFFSETX_KEY, maxX, defaultX);
         int offsetY = getOffset(LOGINFORM_OFFSETY_KEY, maxY, defaultY);
