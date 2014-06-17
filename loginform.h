@@ -26,12 +26,14 @@
 #ifndef LOGINFORM_H
 #define LOGINFORM_H
 
-#include <QtGui/QWidget>
-#include <QtCore/QProcess>
-#include <QtGui/QDialog>
-#include <QtGui/QKeyEvent>
+#include <QWidget>
+#include <QProcess>
+#include <QDialog>
+#include <QKeyEvent>
 #include <QGraphicsOpacityEffect>
+
 #include <LXQt/PowerManager>
+
 #include "logindata.h"
 
 namespace Ui {

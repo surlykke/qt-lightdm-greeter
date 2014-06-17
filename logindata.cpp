@@ -23,13 +23,12 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <QDebug>
 #include <QFile>
 #include <QMessageBox>
 #include <QDir>
 #include <QSettings>
-#include <QLightDM/greeter.h>
-#include <qtxdg/xdgdirs.h>
+
+#include <qtxdg/XdgDirs>
 
 #include "logindata.h"
 #include "constants.h"

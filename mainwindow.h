@@ -26,7 +26,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
+
 #include <QLightDM/Greeter>
 
 #include "loginform.h"

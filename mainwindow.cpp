@@ -23,15 +23,16 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <QtCore/QRect>
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QPalette>
-#include <QtGui/QX11Info>
+#include <QRect>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QPalette>
+#include <QX11Info>
 #include <QString>
 #include <QDebug>
 
 #include <LXQt/Settings>
+
 #include "mainwindow.h"
 #include "loginform.h"
 #include "constants.h"

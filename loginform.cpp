@@ -23,23 +23,24 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
+#include <QDebug>
+#include <QCompleter>
+#include <QAbstractListModel>
+#include <QModelIndex>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
+#include <QPixmap>
+#include <QMessageBox>
+#include <QMenu>
+#include <QProcess>
+
+#include <LXQt/Settings>
+
 #include "loginform.h"
 #include "ui_loginform.h"
 
-#include <QtCore/QDebug>
-#include <QtGui/QCompleter>
-#include <QtCore/QAbstractListModel>
-#include <QtCore/QModelIndex>
-#include <QtCore/QFile>
-#include <QtCore/QTextStream>
-#include <QtCore/QStringList>
-#include <QtGui/QPixmap>
-#include <QtGui/QMessageBox>
-#include <QtGui/QMenu>
-#include <QtCore/QProcess>
-#include <LXQt/Settings>
-
-LoginForm::LoginForm(QWidget *parent) : 
+LoginForm::LoginForm(QWidget *parent) :
     QWidget(parent), 
         ui(new Ui::LoginForm), 
         m_Greeter(),

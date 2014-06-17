@@ -26,11 +26,10 @@
 #ifndef LOGIN_DATA_H
 #define	LOGIN_DATA_H
 
-#include <QtCore/QObject>
+#include <QObject>
 #include <QDebug>
 #include <QLightDM/UsersModel>
 #include <QLightDM/SessionsModel>
-
 #include <QLightDM/Greeter>
 
 class LoginData : public QObject
