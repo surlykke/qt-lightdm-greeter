@@ -236,6 +236,10 @@
         <property name="text">
          <string/>
         </property>
+        <property name="icon">
+         <iconset resource="lxqt-lightdm-greeter.qrc">
+          <normaloff>:/resources/leaveIcon.svg</normaloff>:/resources/leaveIcon.svg</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -266,7 +270,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="lxqt-lightdm-greeter.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>passwordInput</sender>

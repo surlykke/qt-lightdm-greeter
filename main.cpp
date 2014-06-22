@@ -25,15 +25,18 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
-
-#include <LXQt/Application>
-
+#include <QFile>
 #include "mainwindow.h"
 
 
 int main(int argc, char *argv[])
 {
-    LxQt::Application a(argc, argv);
+    QApplication a(argc, argv);
+    QFile styleFile(":/resources/lxqt-lightdm-greeter.qss");
+    styleFile.open(QFile::ReadOnly);
+    QString styleSheet = styleFile.readAll();
+    qDebug() << "Setting styleSheet:" << styleSheet;
+    a.setStyleSheet(styleSheet);
 
     MainWindow *focusWindow = 0;
     for (int i = 0; i < QApplication::desktop()->screenCount(); ++i)
