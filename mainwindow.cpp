@@ -27,7 +27,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPalette>
-#include <QX11Info>
 #include <QString>
 #include <QDebug>
 

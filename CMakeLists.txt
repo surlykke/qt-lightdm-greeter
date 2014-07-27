@@ -2,28 +2,6 @@ cmake_minimum_required(VERSION 2.6)
 set(PROJECT lxqt-lightdm-greeter)
 project(${PROJECT})
 
-find_package ( Qt4 REQUIRED )
-include ( ${QT_USE_FILE} )
-
-find_package(LXQT REQUIRED )
-include(${LXQT_USE_FILE})
-
-include(FindPkgConfig)
-message(STATUS "Checking for lightdm-qt...")
-pkg_check_modules(LIGHTDM_QT liblightdm-qt-3)
-
-if (NOT LIGHTDM_QT_INCLUDE_DIRS)
-    message(FATAL "liblightdm-qt-3 include directory not found")
-endif (NOT LIGHTDM_QT_INCLUDE_DIRS)
-    
-if (NOT LIGHTDM_QT_LIBRARIES)
-    message(FATAL "lightdm-qt-3 library not found")
-endif (NOT LIGHTDM_QT_LIBRARIES)
-
-include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}
-                      ${CMAKE_CURRENT_BINARY_DIR}
-                      ${LIGHTDM_QT_INCLUDE_DIRS}
-)
 
 set ( lxqt-lightdm-greeter_HDRS
         mainwindow.h
@@ -53,13 +31,65 @@ set ( lxqt-lightdm-greeter_RSCS
     )
 
 
-QT4_WRAP_UI(UIS ${lxqt-lightdm-greeter_UIS})
+option(USE_QT5 "Build with Qt5." $ENV{USE_QT5})
 
-QT4_ADD_RESOURCES( RSCS ${lxqt-lightdm-greeter_RSCS})
+if(USE_QT5)
+    find_package(Qt5Widgets REQUIRED)
+    find_package(lxqt-qt5 REQUIRED)
+    include(${LXQT_USE_FILE})
+    set(LIBRARIES lxqt-qt5 Qt5Xdg)
+
+    QT5_WRAP_UI(UIS ${lxqt-lightdm-greeter_UIS})
+    QT5_ADD_RESOURCES( RSCS ${lxqt-lightdm-greeter_RSCS})
+    QT5_WRAP_CPP(MOCS ${lxqt-lightdm-greeter_MOCS})
+
+    
+    include(FindPkgConfig)
+    message(STATUS "Checking for lightdm-qt5-3")
+    pkg_check_modules(LIGHTDM_QT liblightdm-qt5-3)
+
+    if (NOT LIGHTDM_QT_INCLUDE_DIRS)
+        message(FATAL "liblightdm-qt5-3 include directory not found")
+    endif (NOT LIGHTDM_QT_INCLUDE_DIRS)
+
+    if (NOT LIGHTDM_QT_LIBRARIES)
+        message(FATAL "lightdm-qt5-3 library not found")
+    endif (NOT LIGHTDM_QT_LIBRARIES)
+
+
+else()
+    find_package ( Qt4 REQUIRED )
+    include ( ${QT_USE_FILE} )
+    set(LIBRARIES lxqt qtxdg)
+
+    QT4_WRAP_UI(UIS ${lxqt-lightdm-greeter_UIS})
+    QT4_ADD_RESOURCES( RSCS ${lxqt-lightdm-greeter_RSCS})
+    QT4_WRAP_CPP(MOCS ${lxqt-lightdm-greeter_MOCS})
+
+    find_package(LXQT REQUIRED )
+    include(${LXQT_USE_FILE})
+
+    include(FindPkgConfig)
+    message(STATUS "Checking for lightdm-qt...")
+    pkg_check_modules(LIGHTDM_QT liblightdm-qt-3)
+
+    if (NOT LIGHTDM_QT_INCLUDE_DIRS)
+        message(FATAL "liblightdm-qt-3 include directory not found")
+    endif (NOT LIGHTDM_QT_INCLUDE_DIRS)
+
+    if (NOT LIGHTDM_QT_LIBRARIES)
+        message(FATAL "lightdm-qt-3 library not found")
+    endif (NOT LIGHTDM_QT_LIBRARIES)
+
+endif()
+
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}
+                      ${CMAKE_CURRENT_BINARY_DIR}
+                      ${LIGHTDM_QT_INCLUDE_DIRS}
+)
 
 message(STATUS "RSCS=${RSCS}")
 
-QT4_WRAP_CPP(MOCS ${lxqt-lightdm-greeter_MOCS})
 
 
 if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
@@ -79,9 +109,8 @@ add_executable ( lxqt-lightdm-greeter
 )
 
 target_link_libraries ( lxqt-lightdm-greeter  
-                        lxqt 
-                        qtxdg 
-                        ${QT_QTCORE_LIBRARY} 
+                        ${LIBRARIES}
+                        ${QT_QTCORE_LIBRARY}
                         ${QT_QTGUI_LIBRARY} 
                         ${QT_QTDBUS_LIBRARY} 
                         ${QT_QTNETWORK_LIBRARY} 

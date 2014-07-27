@@ -28,7 +28,7 @@
 #include <QDir>
 #include <QSettings>
 
-#include <qtxdg/XdgDirs>
+#include <XdgDirs>
 
 #include "logindata.h"
 #include "constants.h"
