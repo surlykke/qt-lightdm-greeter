@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=LXQT LightDM Greeter
+Comment=This runs the LxQt LightDM greeter, it should only be run from LightDM
+Exec=${CMAKE_CURRENT_BINARY_DIR}/lxqt-lightdm-greeter
+Type=Application
+X-Ubuntu-Gettext-Domain=lightdm
