@@ -31,7 +31,7 @@ set ( lxqt-lightdm-greeter_RSCS
     )
 
 find_package(Qt5Widgets REQUIRED)
-find_package(lxqt-qt5 REQUIRED)
+find_package(lxqt REQUIRED)
 include(${LXQT_USE_FILE})
 
 QT5_WRAP_UI(UIS ${lxqt-lightdm-greeter_UIS})
