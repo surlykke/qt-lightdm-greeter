@@ -23,7 +23,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include <QDesktopWidget>
 #include <QFile>
 #include "mainwindow.h"
