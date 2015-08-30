@@ -9,6 +9,7 @@
 #define BACKGROUND_IMAGE_KEY "greeter-background-image"
 #define LOGINFORM_OFFSETX_KEY "loginform-offset-x"
 #define LOGINFORM_OFFSETY_KEY "loginform-offset-y"
+#define LOGFILE_PATH_KEY "logfile-path"
 
 namespace LXQt {
     namespace LightDmGreeter {
