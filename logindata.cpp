@@ -132,10 +132,13 @@ int LoginData::suggestedUser()
 int LoginData::suggestedSession()
 {
     int suggestedSessionIndex = 0;
-
+	QString suggestedSessionName = m_Greeter->defaultSessionHint();
+	if (suggestedSessionName.isEmpty()) {
+		suggestedSessionName = "lxqt";
+	}
     for (int i = 0; i < numberOfSessions(); i++)
     {
-        if (sessionName(i) == "lxqt")
+        if (sessionName(i) == suggestedSessionName)
         {
             suggestedSessionIndex = i;
             break;
