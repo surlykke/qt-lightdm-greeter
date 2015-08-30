@@ -10,7 +10,7 @@
 #define LOGINFORM_OFFSETX_KEY "loginform-offset-x"
 #define LOGINFORM_OFFSETY_KEY "loginform-offset-y"
 
-namespace LxQt {
+namespace LXQt {
     namespace LightDmGreeter {
         const QString DATADIR = "lxqt-lightdm-greeter"; 
     }

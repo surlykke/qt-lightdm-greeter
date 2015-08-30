@@ -36,7 +36,7 @@
 #include "loginform.h"
 #include "constants.h"
 
-using namespace LxQt;
+using namespace LXQt;
 
 MainWindow::MainWindow(int screen, QWidget *parent)
     : QWidget(parent),

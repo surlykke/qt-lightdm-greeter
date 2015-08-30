@@ -70,7 +70,7 @@ private:
     Ui::LoginForm *ui;
     QLightDM::Greeter m_Greeter; 
     LoginData m_LoginData;
-    LxQt::PowerManager m_powerManager;
+    LXQt::PowerManager m_powerManager;
     
     int m_otherUserComboIndex;
     QString m_user;
