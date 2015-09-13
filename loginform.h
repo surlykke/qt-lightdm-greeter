@@ -31,8 +31,9 @@
 #include <QDialog>
 #include <QKeyEvent>
 #include <QGraphicsOpacityEffect>
+#include <QMenu>
 
-#include <LXQt/PowerManager>
+#include <QLightDM/Power>
 
 #include "logindata.h"
 
@@ -66,12 +67,14 @@ private:
     void initializeControls();
     void setSessionCombo(int session_index);
     void setUser(QString user);
+    QMenu* buildLeaveMenu();
+
 
     Ui::LoginForm *ui;
     QLightDM::Greeter m_Greeter; 
     LoginData m_LoginData;
-    LXQt::PowerManager m_powerManager;
-    
+    QLightDM::PowerInterface power;
+
     int m_otherUserComboIndex;
     QString m_user;
 };

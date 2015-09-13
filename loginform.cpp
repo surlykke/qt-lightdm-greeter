@@ -35,8 +35,6 @@
 #include <QMenu>
 #include <QProcess>
 
-#include <LXQt/Settings>
-
 #include "loginform.h"
 #include "ui_loginform.h"
 
@@ -45,7 +43,7 @@ LoginForm::LoginForm(QWidget *parent) :
         ui(new Ui::LoginForm), 
         m_Greeter(),
         m_LoginData(&m_Greeter),
-        m_powerManager(this, true),
+        power(this),
         m_otherUserComboIndex(-1)
 {
     if (!m_Greeter.connectSync())
@@ -125,13 +123,7 @@ void LoginForm::setupConnections()
 
 void LoginForm::initializeControls()
 {
-    QMenu* leaveMenu = new QMenu(this);
-    ui->leaveButton->setMenu(leaveMenu);
-    
-    foreach (QAction *action, m_powerManager.availableActions())
-    {
-        leaveMenu->addAction(action);
-    }
+    ui->leaveButton->setMenu(buildLeaveMenu());
 
     qDebug() << "showManualLoginHint:" << m_Greeter.showManualLoginHint();
 
@@ -231,6 +223,29 @@ void LoginForm::setUser(QString user)
         m_Greeter.cancelAuthentication();
     }
     m_Greeter.authenticate(m_user);
+}
+
+QMenu *LoginForm::buildLeaveMenu()
+{
+    QMenu* leaveMenu = new QMenu(this);
+    if (power.canShutdown()) {
+        QAction* action = leaveMenu->addAction(QIcon::fromTheme("system-shutdown"), tr("Shutdown"));
+        connect(action, SIGNAL(triggered(bool)), &power, SLOT(shutdown()));
+    }
+    if (power.canRestart()) {
+        QAction* action = leaveMenu->addAction(QIcon::fromTheme("system-reboot"), tr("Restart"));
+        connect(action, SIGNAL(triggered(bool)), &power, SLOT(restart()));
+    }
+    if (power.canHibernate()) {
+        QAction* action = leaveMenu->addAction(QIcon::fromTheme("system-suspend-hibernate"), tr("Hibernate"));
+        connect(action, SIGNAL(triggered(bool)), &power, SLOT(hibernate()));
+    }
+    if (power.canSuspend()) {
+        QAction* action = leaveMenu->addAction(QIcon::fromTheme("system-suspend"), tr("Suspend"));
+        connect(action, SIGNAL(triggered(bool)), &power, SLOT(suspend()));
+    }
+
+    return leaveMenu;
 }
 
 void LoginForm::authenticationComplete()

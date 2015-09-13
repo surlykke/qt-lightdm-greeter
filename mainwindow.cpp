@@ -29,8 +29,7 @@
 #include <QPalette>
 #include <QString>
 #include <QDebug>
-
-#include <LXQt/Settings>
+#include <QSettings>
 
 #include "mainwindow.h"
 #include "loginform.h"
