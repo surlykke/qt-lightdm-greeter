@@ -59,14 +59,6 @@ include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}
 
 message(STATUS "RSCS=${RSCS}")
 
-
-
-if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
-    configure_file(test/test.sh test/test.sh)
-    configure_file(test/lxqt-lightdm-greeter.desktop test/lxqt-lightdm-greeter.desktop)
-    configure_file(test/lightdm.conf test/lightdm.conf)
-endif()
-
 add_executable ( lxqt-lightdm-greeter
                  ${lxqt-lightdm-greeter_SRCS}
                  ${lxqt-lightdm-greeter_HDRS}
