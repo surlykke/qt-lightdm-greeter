@@ -28,8 +28,6 @@
 #include <QDir>
 #include <QSettings>
 
-#include <XdgDirs>
-
 #include "logindata.h"
 #include "constants.h"
 
@@ -41,7 +39,11 @@ LoginData::LoginData(QLightDM::Greeter *greeter) :
         m_UsersModel(this), 
         m_SessionsModel(this)
 {
-    m_StatefilePath = XdgDirs::cacheHome(true) + "/" + DATA_DIR + "/state";
+    QDir stateDir("/var/lib/lightdm/.cache/lxqt-lightdm-greeter");
+    if (! stateDir.exists()) {
+        stateDir.mkdir(".");
+    }
+    m_StatefilePath = stateDir.path() + "/state";
 }
 
 LoginData::~LoginData()

@@ -2,92 +2,35 @@ cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 set(PROJECT lxqt-lightdm-greeter)
 project(${PROJECT})
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 
-set ( lxqt-lightdm-greeter_HDRS
-        mainwindow.h
-        loginform.h
-        logindata.h
-)
-
-set ( lxqt-lightdm-greeter_SRCS
-        main.cpp
-        mainwindow.cpp
-        loginform.cpp
-        logindata.cpp
-)
-
-set ( lxqt-lightdm-greeter_UIS
-        loginform.ui
-)
-
-set ( lxqt-lightdm-greeter_MOCS
-       mainwindow.h
-       loginform.h
-       logindata.h
-)
-
-set ( lxqt-lightdm-greeter_RSCS
-      lxqt-lightdm-greeter.qrc
-    )
+file(GLOB SRCS *.cpp *ui *moc)
+message(STATUS "SRCS ${SRCS}")
 
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5X11Extras REQUIRED QUIET)
-find_package(lxqt REQUIRED)
+#find_package(Qt5X11Extras REQUIRED QUIET)
 
-QT5_WRAP_UI(UIS ${lxqt-lightdm-greeter_UIS})
-QT5_ADD_RESOURCES( RSCS ${lxqt-lightdm-greeter_RSCS})
-QT5_WRAP_CPP(MOCS ${lxqt-lightdm-greeter_MOCS})
+QT5_ADD_RESOURCES(RSCS lxqt-lightdm-greeter.qrc)
 
 
 include(FindPkgConfig)
-message(STATUS "Checking for lightdm-qt5-3")
 pkg_check_modules(LIGHTDM_QT liblightdm-qt5-3)
-
-if (NOT LIGHTDM_QT_INCLUDE_DIRS)
-    message(FATAL "liblightdm-qt5-3 include directory not found")
-endif (NOT LIGHTDM_QT_INCLUDE_DIRS)
-
-if (NOT LIGHTDM_QT_LIBRARIES)
-    message(FATAL "lightdm-qt5-3 library not found")
-endif (NOT LIGHTDM_QT_LIBRARIES)
-
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}
                       ${CMAKE_CURRENT_BINARY_DIR}
                       ${LIGHTDM_QT_INCLUDE_DIRS}
 )
 
-message(STATUS "RSCS=${RSCS}")
+add_executable ( lxqt-lightdm-greeter ${SRCS} ${RSCS})
 
-add_executable ( lxqt-lightdm-greeter
-                 ${lxqt-lightdm-greeter_SRCS}
-                 ${lxqt-lightdm-greeter_HDRS}
-                 ${lxqt-lightdm-greeter_UIS}
-                 ${MOCS}
-                 ${RSCS}
-)
+target_link_libraries ( lxqt-lightdm-greeter Qt5::Widgets ${LIGHTDM_QT_LIBRARIES} )
 
-target_link_libraries ( lxqt-lightdm-greeter  
-                        lxqt
-                        Qt5::Widgets 
-                        ${LIGHTDM_QT_LIBRARIES} )
-
-file(GLOB DESKTOP_FILES resources/*.desktop)
-file(GLOB CONFIG_FILES resources/*.conf)
 
 install(TARGETS ${PROJECT} RUNTIME DESTINATION bin)
-install(FILES   ${DESKTOP_FILES}   DESTINATION /usr/share/xgreeters)
+install(FILES   lxqt-lightdm-greeter.desktop  DESTINATION /usr/share/xgreeters)
 
 if (NOT KEEP_CONFIGS)
-    install(FILES ${CONFIG_FILES} DESTINATION /etc/lightdm)
+    install(FILES lxqt-lightdm-greeter.conf DESTINATION /etc/lightdm)
 endif()
 
-# building tarball with CPack -------------------------------------------------
-include (InstallRequiredSystemLibraries)
-set (CPACK_PACKAGE_VERSION_MAJOR ${LXQT_MAJOR_VERSION})
-set (CPACK_PACKAGE_VERSION_MINOR ${LXQT_MINOR_VERSION})
-set (CPACK_PACKAGE_VERSION_PATCH ${LXQT_PATCH_VERSION})
-set (CPACK_GENERATOR TBZ2)
-set (CPACK_SOURCE_GENERATOR TBZ2)
-set (CPACK_SOURCE_IGNORE_FILES /build/;.gitignore;.*~;.git;.kdev4;temp)
-include (CPack)
