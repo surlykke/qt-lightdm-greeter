@@ -11,11 +11,5 @@
 #define LOGINFORM_OFFSETY_KEY "loginform-offset-y"
 #define LOGFILE_PATH_KEY "logfile-path"
 
-namespace LXQt {
-    namespace LightDmGreeter {
-        const QString DATADIR = "qt-lightdm-greeter"; 
-    }
-}
-
 #endif	/* CONSTANTS_H */
 
