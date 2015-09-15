@@ -1,3 +1,10 @@
+/*
+* Copyright (c) 2012-2015 Christian Surlykke
+*
+* This file is part of qt-lightdm-greeter 
+* It is distributed under the LGPL 2.1 or later license.
+* Please refer to the LICENSE file for a copy of the license.
+*/
 #ifndef CONSTANTS_H
 #define	CONSTANTS_H
 
