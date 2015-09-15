@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     setupLoggin();
-    QFile styleFile(":/resources/lxqt-lightdm-greeter.qss");
+    QFile styleFile(":/resources/qt-lightdm-greeter.qss");
     styleFile.open(QFile::ReadOnly);
     QString styleSheet = styleFile.readAll();
     qDebug() << "Setting styleSheet:" << styleSheet;

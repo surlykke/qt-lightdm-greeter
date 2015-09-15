@@ -3,6 +3,6 @@
         <file>resources/helix_1120.png</file>
         <file>resources/dropdown.svg</file>
         <file>resources/leaveIcon.svg</file>
-        <file>resources/lxqt-lightdm-greeter.qss</file>
+        <file>resources/qt-lightdm-greeter.qss</file>
     </qresource>
 </RCC>

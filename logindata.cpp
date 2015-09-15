@@ -39,7 +39,7 @@ LoginData::LoginData(QLightDM::Greeter *greeter) :
         m_UsersModel(this), 
         m_SessionsModel(this)
 {
-    QDir stateDir("/var/lib/lightdm/.cache/lxqt-lightdm-greeter");
+    QDir stateDir("/var/lib/lightdm/.cache/qt-lightdm-greeter");
     if (! stateDir.exists()) {
         stateDir.mkdir(".");
     }
@@ -134,10 +134,7 @@ int LoginData::suggestedUser()
 int LoginData::suggestedSession()
 {
     int suggestedSessionIndex = 0;
-	QString suggestedSessionName = m_Greeter->defaultSessionHint();
-	if (suggestedSessionName.isEmpty()) {
-		suggestedSessionName = "lxqt";
-	}
+    QString suggestedSessionName = m_Greeter->defaultSessionHint();
     for (int i = 0; i < numberOfSessions(); i++)
     {
         if (sessionName(i) == suggestedSessionName)

@@ -237,7 +237,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="lxqt-lightdm-greeter.qrc">
+         <iconset resource="qt-lightdm-greeter.qrc">
           <normaloff>:/resources/leaveIcon.svg</normaloff>:/resources/leaveIcon.svg</iconset>
         </property>
        </widget>
@@ -271,7 +271,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="lxqt-lightdm-greeter.qrc"/>
+  <include location="qt-lightdm-greeter.qrc"/>
  </resources>
  <connections>
   <connection>
