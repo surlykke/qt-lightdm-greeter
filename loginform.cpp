@@ -84,7 +84,7 @@ void LoginForm::setFocus(Qt::FocusReason reason)
 
 void LoginForm::setupAppearence()
 {
-    QPixmap icon(":/resources/helix_1120.png");
+    QPixmap icon(":/resources/rqt-2.png");
     ui->iconLabel->setPixmap(icon.scaled(ui->iconLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     ui->hostnameLabel->setText(m_Greeter.hostname());
 }

@@ -104,7 +104,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>resources/helix_1120.png</pixmap>
+         <pixmap resource="qt-lightdm-greeter.qrc">:/resources/rqt-2.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
