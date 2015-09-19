@@ -91,27 +91,25 @@ void LoginForm::initialize()
     }
 
     ui->userCombo->setCurrentIndex(-1);
+    ui->sessionCombo->setCurrentIndex(0);
+    setCurrentSession(m_Greeter.defaultSessionHint());
+
     connect(ui->userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged()));
     connect(ui->otherUserInput, SIGNAL(editingFinished()), this, SLOT(userChanged()));
     connect(ui->loginButton, SIGNAL(clicked(bool)), this, SLOT(loginClicked()));
     connect(&m_Greeter, SIGNAL(showPrompt(QString, QLightDM::Greeter::PromptType)), this, SLOT(onPrompt(QString, QLightDM::Greeter::PromptType)));
     connect(&m_Greeter, SIGNAL(authenticationComplete()), this, SLOT(authenticationComplete()));
 
-    int userIndex = 0;
     if (m_Greeter.showManualLoginHint()) {
-        userIndex = (usersModel.rowCount(QModelIndex()) - 1); // 'other..'
+        ui->userCombo->setCurrentIndex(ui->userCombo->count() - 1); // 'other..'
     }
     else {
-        QString user = Settings().getLastUser().isEmpty() ?
-                    m_Greeter.selectUserHint() : Settings().getLastUser();
-
-        for (int i = 0; i < usersModel.rowCount(QModelIndex()) - 1; i++) {
-            if (user == usersModel.data(usersModel.index(i, 0), QLightDM::UsersModel::NameRole)) {
-                ui->userCombo->setCurrentIndex(i);
-            }
+        QString user = Settings().getLastUser();
+        if (user.isEmpty()) {
+            user = m_Greeter.selectUserHint();
         }
+        setCurrentUser(user);
     }
-    ui->userCombo->setCurrentIndex(userIndex);
 
     ui->passwordInput->setEnabled(false);
     ui->passwordInput->clear();
@@ -119,13 +117,7 @@ void LoginForm::initialize()
 
 void LoginForm::userChanged()
 {
-    ui->sessionCombo->setCurrentIndex(0);
-    QString sessionHint = m_Greeter.defaultSessionHint();
-    for (int i = 0; i < sessionsModel.rowCount(QModelIndex()); i++) {
-        if (sessionHint == sessionsModel.data(sessionsModel.index(i, 0), QLightDM::SessionsModel::KeyRole)) {
-            ui->sessionCombo->setCurrentIndex(i);
-        }
-    }
+    setCurrentSession(Settings().getLastSession(currentUser()));
 
     if (m_Greeter.inAuthentication()) {
         m_Greeter.cancelAuthentication();
@@ -163,7 +155,17 @@ void LoginForm::addLeaveEntry(QString iconName, QString text, const char* slot)
 QString LoginForm::currentUser()
 {
     QModelIndex index = usersModel.index(ui->userCombo->currentIndex(), 0, QModelIndex());
-    return usersModel.data(index, QLightDM::UsersModel::NameRole).toString();
+    return usersModel.data(index, NameRole).toString();
+}
+
+void LoginForm::setCurrentUser(QString user)
+{
+    for (int i = 0; i < ui->userCombo->count() - 1; i++) {
+        if (user == usersModel.data(usersModel.index(i, 0), NameRole).toString()) {
+            ui->userCombo->setCurrentIndex(i);
+            return;
+        }
+    }
 }
 
 QString LoginForm::currentSession()
@@ -172,12 +174,24 @@ QString LoginForm::currentSession()
     return sessionsModel.data(index, QLightDM::SessionsModel::KeyRole).toString();
 }
 
+void LoginForm::setCurrentSession(QString session)
+{
+    for (int i = 0; i < ui->sessionCombo->count(); i++) {
+        if (session == sessionsModel.data(sessionsModel.index(i, 0), KeyRole).toString()) {
+            ui->sessionCombo->setCurrentIndex(i);
+            return;
+        }
+    }
+}
+
 
 void LoginForm::authenticationComplete()
 {
     if (m_Greeter.isAuthenticated()) {
         Settings settings;
         settings.setLastUser(currentUser());
+        settings.setLastSession(currentUser(), currentSession());
+        settings.sync();
         m_Greeter.startSessionSync(currentSession());
     }
     else  {

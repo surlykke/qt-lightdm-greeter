@@ -13,6 +13,7 @@
 #include <QFile>
 #include <QSettings>
 #include "constants.h"
+#include "settings.h"
 #include "mainwindow.h"
 
 QFile logfile;
@@ -27,36 +28,30 @@ void messageHandler(QtMsgType type, const QMessageLogContext&, const QString& ms
 void setupLoggin() 
 {
     QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
-	qDebug() << "opening settings at:" << CONFIG_FILE;
-	qDebug() << "keys:" << greeterSettings.allKeys();
-	foreach (QString key , greeterSettings.allKeys()) {
-		qDebug() << key << "->" << greeterSettings.value(key);
-	}
-
     if (greeterSettings.contains(LOGFILE_PATH_KEY))
     {
-	QString fileName = greeterSettings.value(LOGFILE_PATH_KEY).toString();
-	logfile.setFileName(fileName);
-	if (logfile.open(QIODevice::WriteOnly | QIODevice::Append)) 
-	{
-	    ts.setDevice(&logfile);
-	    qInstallMessageHandler(messageHandler);	
-	}
-	else 
-	{
-	    qWarning() << "Could not open" << fileName; 
-	}
+        QString fileName = greeterSettings.value(LOGFILE_PATH_KEY).toString();
+        logfile.setFileName(fileName);
+        if (logfile.open(QIODevice::WriteOnly | QIODevice::Append))
+        {
+            ts.setDevice(&logfile);
+            qInstallMessageHandler(messageHandler);
+        }
+        else
+        {
+            qWarning() << "Could not open" << fileName;
+        }
     }
 }
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
     setupLoggin();
+    QApplication a(argc, argv);
+    qt_lightdm_greeter_prepare();
     QFile styleFile(":/resources/qt-lightdm-greeter.qss");
     styleFile.open(QFile::ReadOnly);
     QString styleSheet = styleFile.readAll();
-    qDebug() << "Setting styleSheet:" << styleSheet;
     a.setStyleSheet(styleSheet);
 
     MainWindow *focusWindow = 0;

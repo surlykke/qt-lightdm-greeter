@@ -53,7 +53,9 @@ private:
     void addLeaveEntry(QString iconName, QString text, const char *slot);
 
     QString currentUser();
+    void setCurrentUser(QString user);
     QString currentSession();
+    void setCurrentSession(QString session);
 
     Ui::LoginForm *ui;
 
