@@ -23,7 +23,8 @@
 
 //#include "logindata.h"
 
-namespace Ui {
+namespace Ui
+{
 class LoginForm;
 }
 
@@ -37,7 +38,6 @@ public:
     explicit LoginForm(QWidget *parent = 0);
     ~LoginForm();
     virtual void setFocus(Qt::FocusReason reason);
-    QString otherUserName();
 
 public slots:
     void userChanged();
@@ -50,15 +50,10 @@ protected:
 
 private:
     void initialize();
-    QMenu* buildLeaveMenu();
+    void addLeaveEntry(QString iconName, QString text, const char *slot);
 
     QString currentUser();
     QString currentSession();
-
-    void setSuggestedUser();
-    void setSuggestedSession();
-    void userChosen();
-
 
     Ui::LoginForm *ui;
 
@@ -66,7 +61,6 @@ private:
     QLightDM::PowerInterface power;
     DecoratedUsersModel usersModel;
     QLightDM::SessionsModel sessionsModel;
-    bool sessionComboTouched;
 };
 
 #endif // LOGINFORM_H

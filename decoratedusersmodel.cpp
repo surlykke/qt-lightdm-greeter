@@ -1,6 +1,7 @@
 #include <QDebug>
 #include "decoratedusersmodel.h"
 #include "loginform.h"
+#include "ui_loginform.h"
 
 DecoratedUsersModel::DecoratedUsersModel(LoginForm &loginForm, QObject *parent)
     : QAbstractListModel(parent),
@@ -28,7 +29,7 @@ QVariant DecoratedUsersModel::data(const QModelIndex &index, int role) const
             return tr("other...");
         }
         else if (role = QLightDM::UsersModel::NameRole) {
-            return loginForm.otherUserName();
+            return loginForm.ui->otherUserInput->text();
         }
         else {
             return QVariant();
