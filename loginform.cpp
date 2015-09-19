@@ -23,7 +23,6 @@
 
 const int NameRole = QLightDM::UsersModel::NameRole;
 const int KeyRole = QLightDM::SessionsModel::KeyRole;
-typedef QLightDM::Greeter::PromptType PromptType;
 
 int rows(QAbstractItemModel& model) {
     return model.rowCount(QModelIndex());
@@ -61,7 +60,9 @@ void LoginForm::setFocus(Qt::FocusReason reason)
     if (ui->userCombo->currentIndex() == -1) {
         ui->userCombo->setFocus(reason);
     }
-    else {
+    else if (ui->userCombo->currentIndex() == ui->userCombo->count() - 1) {
+        ui->otherUserInput->setFocus(reason);
+    } else {
         ui->passwordInput->setFocus(reason);
     }
 }
@@ -93,27 +94,24 @@ void LoginForm::initialize()
     connect(ui->userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged()));
     connect(ui->otherUserInput, SIGNAL(editingFinished()), this, SLOT(userChanged()));
     connect(ui->loginButton, SIGNAL(clicked(bool)), this, SLOT(loginClicked()));
-    connect(&m_Greeter, SIGNAL(showPrompt(PromptType)), this, SLOT(onPrompt(QString, PromptType)));
+    connect(&m_Greeter, SIGNAL(showPrompt(QString, QLightDM::Greeter::PromptType)), this, SLOT(onPrompt(QString, QLightDM::Greeter::PromptType)));
     connect(&m_Greeter, SIGNAL(authenticationComplete()), this, SLOT(authenticationComplete()));
 
+    int userIndex = 0;
     if (m_Greeter.showManualLoginHint()) {
-        ui->userCombo->setCurrentIndex(usersModel.rowCount(QModelIndex()) - 1); // 'other..'
+        userIndex = (usersModel.rowCount(QModelIndex()) - 1); // 'other..'
     }
     else {
-        ui->userCombo->setCurrentIndex(0);
-        QString suggestedUser = m_Greeter.selectUserHint();
-        if (suggestedUser.isEmpty()) {
-            suggestedUser = Settings().getLastUser();
-        }
-        if (!suggestedUser.isEmpty()) {
-            for (int i = 0; i < usersModel.rowCount(QModelIndex()) - 1; i++) {
-                if (suggestedUser == usersModel.data(usersModel.index(i, 0), QLightDM::UsersModel::NameRole)) {
-                    ui->userCombo->setCurrentIndex(i);
-                }
+        QString user = Settings().getLastUser().isEmpty() ?
+                    m_Greeter.selectUserHint() : Settings().getLastUser();
+
+        for (int i = 0; i < usersModel.rowCount(QModelIndex()) - 1; i++) {
+            if (user == usersModel.data(usersModel.index(i, 0), QLightDM::UsersModel::NameRole)) {
+                ui->userCombo->setCurrentIndex(i);
             }
         }
     }
-    // -
+    ui->userCombo->setCurrentIndex(userIndex);
 
     ui->passwordInput->setEnabled(false);
     ui->passwordInput->clear();
@@ -121,14 +119,11 @@ void LoginForm::initialize()
 
 void LoginForm::userChanged()
 {
-    // Set suggested session
     ui->sessionCombo->setCurrentIndex(0);
     QString sessionHint = m_Greeter.defaultSessionHint();
-    if (!sessionHint.isEmpty()) {
-        for (int i = 0; i < sessionsModel.rowCount(QModelIndex()); i++) {
-            if (sessionHint == sessionsModel.data(sessionsModel.index(i, 0), QLightDM::SessionsModel::KeyRole)) {
-                ui->sessionCombo->setCurrentIndex(i);
-            }
+    for (int i = 0; i < sessionsModel.rowCount(QModelIndex()); i++) {
+        if (sessionHint == sessionsModel.data(sessionsModel.index(i, 0), QLightDM::SessionsModel::KeyRole)) {
+            ui->sessionCombo->setCurrentIndex(i);
         }
     }
 
@@ -137,6 +132,10 @@ void LoginForm::userChanged()
     }
     if (! currentUser().isEmpty()) {
         m_Greeter.authenticate(currentUser());
+        ui->passwordInput->setFocus();
+    }
+    else if (ui->userCombo->currentIndex() == ui->userCombo->count() - 1) {
+        ui->otherUserInput->setFocus();
     }
 }
 
@@ -147,7 +146,7 @@ void LoginForm::loginClicked()
     ui->passwordInput->setEnabled(false);
 }
 
-void LoginForm::onPrompt(QString prompt, PromptType promptType)
+void LoginForm::onPrompt(QString prompt, QLightDM::Greeter::PromptType promptType)
 {
     ui->passwordInput->setEnabled(true);
     ui->passwordInput->setFocus();
