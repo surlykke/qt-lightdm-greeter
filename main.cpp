@@ -12,6 +12,9 @@
 #include <QtDebug>
 #include <QFile>
 #include <QSettings>
+
+#include <iostream>
+
 #include "constants.h"
 #include "settings.h"
 #include "mainwindow.h"
@@ -21,34 +24,18 @@ QTextStream ts;
 
 void messageHandler(QtMsgType type, const QMessageLogContext&, const QString& msg)
 {
-    ts << type << ": " << msg << "\n";
-    ts.flush();
-}
-
-void setupLoggin() 
-{
-    QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
-    if (greeterSettings.contains(LOGFILE_PATH_KEY))
-    {
-        QString fileName = greeterSettings.value(LOGFILE_PATH_KEY).toString();
-        logfile.setFileName(fileName);
-        if (logfile.open(QIODevice::WriteOnly | QIODevice::Append))
-        {
-            ts.setDevice(&logfile);
-            qInstallMessageHandler(messageHandler);
-        }
-        else
-        {
-            qWarning() << "Could not open" << fileName;
-        }
-    }
+    std::cerr << type << ": " << msg.toLatin1().data() << "\n";
 }
 
 int main(int argc, char *argv[])
 {
-    setupLoggin();
-    QApplication a(argc, argv);
+    // I have no idea why, but Qt's stock qDebug() output never makes it
+    // to /var/log/lightdm/x-0-greeter.log, so we use std::cerr instead..
+    qInstallMessageHandler(messageHandler);
     qt_lightdm_greeter_prepare();
+
+    QApplication a(argc, argv);
+
     QFile styleFile(":/resources/qt-lightdm-greeter.qss");
     styleFile.open(QFile::ReadOnly);
     QString styleSheet = styleFile.readAll();
