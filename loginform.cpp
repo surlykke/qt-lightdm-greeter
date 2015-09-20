@@ -96,7 +96,6 @@ void LoginForm::initialize()
 
     connect(ui->userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged()));
     connect(ui->otherUserInput, SIGNAL(editingFinished()), this, SLOT(userChanged()));
-    connect(ui->loginButton, SIGNAL(clicked(bool)), this, SLOT(loginClicked()));
     connect(&m_Greeter, SIGNAL(showPrompt(QString, QLightDM::Greeter::PromptType)), this, SLOT(onPrompt(QString, QLightDM::Greeter::PromptType)));
     connect(&m_Greeter, SIGNAL(authenticationComplete()), this, SLOT(authenticationComplete()));
 
@@ -131,7 +130,7 @@ void LoginForm::userChanged()
     }
 }
 
-void LoginForm::loginClicked()
+void LoginForm::respond()
 {
     m_Greeter.respond(ui->passwordInput->text().trimmed());
     ui->passwordInput->clear();
@@ -211,7 +210,7 @@ void LoginForm::paintEvent(QPaintEvent *event)
 void LoginForm::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
-        ui->loginButton->animateClick();
+        respond();
     }
     else {
         QWidget::keyPressEvent(event);

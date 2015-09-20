@@ -41,7 +41,7 @@ public:
 
 public slots:
     void userChanged();
-    void loginClicked();
+    void respond();
     void onPrompt(QString prompt, QLightDM::Greeter::PromptType promptType);
     void authenticationComplete();
 
