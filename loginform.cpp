@@ -196,6 +196,7 @@ void LoginForm::authenticationComplete()
     }
     else  {
         ui->passwordInput->clear();
+        userChanged();
     }
 }
 
