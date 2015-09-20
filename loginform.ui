@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>337</width>
-    <height>380</height>
+    <height>434</height>
    </rect>
   </property>
   <property name="font">
@@ -269,22 +269,5 @@
  <resources>
   <include location="qt-lightdm-greeter.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>passwordInput</sender>
-   <signal>returnPressed()</signal>
-   <receiver>loginButton</receiver>
-   <slot>animateClick()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>377</x>
-     <y>281</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>339</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

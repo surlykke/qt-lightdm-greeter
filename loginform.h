@@ -47,6 +47,7 @@ public slots:
 
 protected:
     virtual void paintEvent(QPaintEvent* event);
+    virtual void keyPressEvent(QKeyEvent *event);
 
 private:
     void initialize();

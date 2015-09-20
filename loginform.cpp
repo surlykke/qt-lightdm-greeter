@@ -207,3 +207,13 @@ void LoginForm::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
+void LoginForm::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+        ui->loginButton->animateClick();
+    }
+    else {
+        QWidget::keyPressEvent(event);
+    }
+}
+
