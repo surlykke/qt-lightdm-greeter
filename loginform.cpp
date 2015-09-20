@@ -104,7 +104,7 @@ void LoginForm::initialize()
         ui->userCombo->setCurrentIndex(ui->userCombo->count() - 1); // 'other..'
     }
     else {
-        QString user = Settings().getLastUser();
+        QString user = Cache().getLastUser();
         if (user.isEmpty()) {
             user = m_Greeter.selectUserHint();
         }
@@ -117,7 +117,7 @@ void LoginForm::initialize()
 
 void LoginForm::userChanged()
 {
-    setCurrentSession(Settings().getLastSession(currentUser()));
+    setCurrentSession(Cache().getLastSession(currentUser()));
 
     if (m_Greeter.inAuthentication()) {
         m_Greeter.cancelAuthentication();
@@ -188,7 +188,7 @@ void LoginForm::setCurrentSession(QString session)
 void LoginForm::authenticationComplete()
 {
     if (m_Greeter.isAuthenticated()) {
-        Settings settings;
+        Cache settings;
         settings.setLastUser(currentUser());
         settings.setLastSession(currentUser(), currentSession());
         settings.sync();

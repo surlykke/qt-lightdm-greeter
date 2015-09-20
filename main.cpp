@@ -7,15 +7,13 @@
 */
 #include <QtWidgets/QApplication>
 #include <QDesktopWidget>
-#include <QMap>
 #include <QtGlobal>
 #include <QtDebug>
-#include <QFile>
 #include <QSettings>
+#include <QIcon>
 
 #include <iostream>
 
-#include "constants.h"
 #include "settings.h"
 #include "mainwindow.h"
 
@@ -32,7 +30,7 @@ int main(int argc, char *argv[])
     // I have no idea why, but Qt's stock qDebug() output never makes it
     // to /var/log/lightdm/x-0-greeter.log, so we use std::cerr instead..
     qInstallMessageHandler(messageHandler);
-    qt_lightdm_greeter_prepare();
+    Cache::prepare();
 
     QApplication a(argc, argv);
 
@@ -41,9 +39,12 @@ int main(int argc, char *argv[])
     QString styleSheet = styleFile.readAll();
     a.setStyleSheet(styleSheet);
 
+    if (! Settings().iconThemeName().isEmpty()) {
+        QIcon::setThemeName(Settings().iconThemeName());
+    }
+
     MainWindow *focusWindow = 0;
-    for (int i = 0; i < QApplication::desktop()->screenCount(); ++i)
-    {
+    for (int i = 0; i < QApplication::desktop()->screenCount(); ++i) {
         MainWindow *w = new MainWindow(i);
         w->show();
         if (w->showLoginForm())
@@ -52,8 +53,7 @@ int main(int argc, char *argv[])
 
     // Ensure we set the primary screen's widget as active when there
     // are more screens
-    if (focusWindow)
-    {
+    if (focusWindow) {
         focusWindow->setFocus(Qt::OtherFocusReason);
         focusWindow->activateWindow();
     }

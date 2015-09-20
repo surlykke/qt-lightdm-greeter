@@ -32,7 +32,7 @@ public:
 
     LoginForm* loginForm() { return m_LoginForm;}
 private:
-    int getOffset(QString key, int maxVal, int defaultVal);
+    int getOffset(QString offset, int maxVal, int defaultVal);
     void setBackground();
     int m_Screen;
     LoginForm* m_LoginForm;

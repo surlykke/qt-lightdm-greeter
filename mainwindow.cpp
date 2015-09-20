@@ -11,15 +11,14 @@
 #include <QPalette>
 #include <QString>
 #include <QDebug>
-#include <QSettings>
 
 #include "mainwindow.h"
 #include "loginform.h"
-#include "constants.h"
+#include "settings.h"
 
-MainWindow::MainWindow(int screen, QWidget *parent)
-    : QWidget(parent),
-        m_Screen(screen)
+MainWindow::MainWindow(int screen, QWidget *parent) :
+    QWidget(parent),
+    m_Screen(screen)
 {
     setObjectName(QString("MainWindow_%1").arg(screen));
     
@@ -31,16 +30,15 @@ MainWindow::MainWindow(int screen, QWidget *parent)
 
     // display login dialog only in the main screen
     
-    if (showLoginForm())
-    {
+    if (showLoginForm()) {
         m_LoginForm = new LoginForm(this);
 
         int maxX = screenRect.width() - m_LoginForm->width();
         int maxY = screenRect.height() - m_LoginForm->height();
         int defaultX = 10*maxX/100;
         int defaultY = 50*maxY/100;
-        int offsetX = getOffset(LOGINFORM_OFFSETX_KEY, maxX, defaultX);
-        int offsetY = getOffset(LOGINFORM_OFFSETY_KEY, maxY, defaultY);
+        int offsetX = getOffset(Settings().offsetX(), maxX, defaultX);
+        int offsetY = getOffset(Settings().offsetY(), maxY, defaultY);
         
         m_LoginForm->move(offsetX, offsetY);
         m_LoginForm->show();
@@ -66,41 +64,31 @@ bool MainWindow::showLoginForm()
 
 void MainWindow::setFocus(Qt::FocusReason reason)
 {
-    if (m_LoginForm)
-    {
+    if (m_LoginForm) {
         m_LoginForm->setFocus(reason);
     }
-    else 
-    {
+    else  {
         QWidget::setFocus(reason);
     }
 }
 
-int MainWindow::getOffset(QString key, int maxVal, int defaultVal)
+int MainWindow::getOffset(QString settingsOffset, int maxVal, int defaultVal)
 {
 
-    QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
     int offset = defaultVal > maxVal ? maxVal : defaultVal;
 
-    if (greeterSettings.contains(key)) 
-    {
-        QString offsetAsString = greeterSettings.value(key).toString();
-        if (QRegExp("^\\d+px$", Qt::CaseInsensitive).exactMatch(offsetAsString)) 
-        {
-
-            offset = offsetAsString.left(offsetAsString.size() - 2).toInt();
+    if (! settingsOffset.isEmpty())  {
+        if (QRegExp("^\\d+px$", Qt::CaseInsensitive).exactMatch(settingsOffset))  {
+            offset = settingsOffset.left(settingsOffset.size() - 2).toInt();
             if (offset > maxVal) offset = maxVal;
         }
-        else if (QRegExp("^\\d+%$", Qt::CaseInsensitive).exactMatch(offsetAsString))
-        {
-            int offsetPct = offsetAsString.left(offsetAsString.size() -1).toInt();
+        else if (QRegExp("^\\d+%$", Qt::CaseInsensitive).exactMatch(settingsOffset)) {
+            int offsetPct = settingsOffset.left(settingsOffset.size() -1).toInt();
             if (offsetPct > 100) offsetPct = 100;
             offset = (maxVal * offsetPct)/100;
         }
-        else
-        {
-            qWarning() << "Could not understand" << key 
-                       << "value:" << offsetAsString 
+        else {
+            qWarning() << "Could not understand" << settingsOffset
                        << "- must be of form <positivenumber>px or <positivenumber>%, e.g. 35px or 25%" ;
         }
     }
@@ -113,13 +101,11 @@ void MainWindow::setBackground()
     QImage backgroundImage;
     QSettings greeterSettings(CONFIG_FILE, QSettings::IniFormat);
     
-    if (greeterSettings.contains(BACKGROUND_IMAGE_KEY))
-    {
+    if (greeterSettings.contains(BACKGROUND_IMAGE_KEY)) {
         QString pathToBackgroundImage = greeterSettings.value(BACKGROUND_IMAGE_KEY).toString();
         
         backgroundImage = QImage(pathToBackgroundImage);
-        if (backgroundImage.isNull())
-        {
+        if (backgroundImage.isNull()) {
             qWarning() << "Not able to read" << pathToBackgroundImage << "as image";
         }
              
@@ -127,12 +113,10 @@ void MainWindow::setBackground()
     
     QPalette palette;
     QRect rect = QApplication::desktop()->screenGeometry(m_Screen);
-    if (backgroundImage.isNull())
-    {
+    if (backgroundImage.isNull()) {
         palette.setColor(QPalette::Background, Qt::black);
     }
-    else
-    {
+    else {
         QBrush brush(backgroundImage.scaled(rect.width(), rect.height()));
         palette.setBrush(this->backgroundRole(), brush);
     }
