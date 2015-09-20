@@ -3,7 +3,7 @@ QWidget {
 }
 
 #formFrame { 
-    background-color: rgba(200,200,200, 128);
+    background-color: rgba(80,80,80, 180);
     border-radius: 10px;
 }
 
@@ -16,6 +16,7 @@ QPushButton {
 QComboBox::drop-down {
     border: none;
     width: 24px;
+    text-align: center;
 }
 
 QComboBox::down-arrow {
