@@ -19,9 +19,6 @@
 #include <QLightDM/Greeter>
 #include <QLightDM/SessionsModel>
 
-#include "decoratedusersmodel.h"
-
-//#include "logindata.h"
 
 namespace Ui
 {
@@ -46,15 +43,12 @@ public slots:
     void authenticationComplete();
 
 protected:
-    virtual void paintEvent(QPaintEvent* event);
     virtual void keyPressEvent(QKeyEvent *event);
 
 private:
     void initialize();
     void addLeaveEntry(QString iconName, QString text, const char *slot);
 
-    QString currentUser();
-    void setCurrentUser(QString user);
     QString currentSession();
     void setCurrentSession(QString session);
 
@@ -62,7 +56,6 @@ private:
 
     QLightDM::Greeter m_Greeter;
     QLightDM::PowerInterface power;
-    DecoratedUsersModel usersModel;
     QLightDM::SessionsModel sessionsModel;
 };
 
