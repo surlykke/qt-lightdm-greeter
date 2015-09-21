@@ -34,11 +34,6 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    QFile styleFile(":/resources/qt-lightdm-greeter.qss");
-    styleFile.open(QFile::ReadOnly);
-    QString styleSheet = styleFile.readAll();
-    a.setStyleSheet(styleSheet);
-
     if (! Settings().iconThemeName().isEmpty()) {
         QIcon::setThemeName(Settings().iconThemeName());
     }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>330</width>
-    <height>380</height>
+    <height>340</height>
    </rect>
   </property>
   <property name="font">
@@ -18,6 +18,37 @@
   </property>
   <property name="windowTitle">
    <string>LoginForm</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    border-radius: 5px;
+}
+
+#hostnameLabel {
+	color: white;
+}
+
+#formFrame { 
+    background-color: rgba(80,80,80, 180);
+    border-radius: 10px;
+}
+
+QComboBox,
+QPushButton {
+    border: 1px solid silver;
+    background-color: rgb(200, 200, 200);
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 24px;
+    text-align: center;
+}
+
+QComboBox::down-arrow {
+    image: url(:/resources/dropdown.svg);
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -30,10 +61,10 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="bottomMargin">
-       <number>35</number>
+       <number>25</number>
       </property>
       <property name="verticalSpacing">
-       <number>20</number>
+       <number>10</number>
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="hostnameLabel">
@@ -193,6 +224,9 @@
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
