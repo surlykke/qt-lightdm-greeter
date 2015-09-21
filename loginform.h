@@ -13,7 +13,7 @@
 #include <QDialog>
 #include <QKeyEvent>
 #include <QGraphicsOpacityEffect>
-#include <QMenu>
+#include <QMap>
 
 #include <QLightDM/Power>
 #include <QLightDM/Greeter>
@@ -38,6 +38,7 @@ public:
 
 public slots:
     void userChanged();
+    void leaveDropDownActivated(int index);
     void respond();
     void onPrompt(QString prompt, QLightDM::Greeter::PromptType promptType);
     void authenticationComplete();
@@ -47,8 +48,7 @@ protected:
 
 private:
     void initialize();
-    void addLeaveEntry(QString iconName, QString text, const char *slot);
-
+    void addLeaveEntry(bool canDo, QString iconName, QString text, QString actionName);
     QString currentSession();
     void setCurrentSession(QString session);
 
@@ -57,6 +57,8 @@ private:
     QLightDM::Greeter m_Greeter;
     QLightDM::PowerInterface power;
     QLightDM::SessionsModel sessionsModel;
+
+    QMap<int, void (QLightDM::PowerInterface::*)()> powerSlots;
 };
 
 #endif // LOGINFORM_H

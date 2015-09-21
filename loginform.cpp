@@ -17,6 +17,7 @@
 #include <QMenu>
 #include <QProcess>
 #include <QLightDM/UsersModel>
+#include <QMetaMethod>
 
 #include "loginform.h"
 #include "ui_loginform.h"
@@ -71,25 +72,18 @@ void LoginForm::initialize()
     ui->hostnameLabel->setText(m_Greeter.hostname());
 
     ui->sessionCombo->setModel(&sessionsModel);
-    ui->leaveButton->setMenu(new QMenu(this));
 
-    if (power.canShutdown()) {
-        addLeaveEntry("system-shutdown", tr("Shutdown"), SLOT(shutdown()));
-    }
-    if (power.canRestart()) {
-        addLeaveEntry("system-reboot", tr("Restart"), SLOT(restart()));
-    }
-    if (power.canHibernate()) {
-        addLeaveEntry("system-suspend-hibernate", tr("Hibernate"), SLOT(hibernate()));
-    }
-    if (power.canSuspend()) {
-        addLeaveEntry("system-suspend", tr("Suspend"), SLOT(suspend()));
-    }
+    addLeaveEntry(power.canShutdown(), "system-shutdown", tr("Shutdown"), "shutdown");
+    addLeaveEntry(power.canRestart(), "system-reboot", tr("Restart"), "restart");
+    addLeaveEntry(power.canHibernate(), "system-suspend-hibernate", tr("Hibernate"), "hibernate");
+    addLeaveEntry(power.canSuspend(), "system-suspend", tr("Suspend"), "suspend");
+    ui->leaveComboBox->setDisabled(ui->leaveComboBox->count() <= 1);
 
     ui->sessionCombo->setCurrentIndex(0);
     setCurrentSession(m_Greeter.defaultSessionHint());
 
     connect(ui->userInput, SIGNAL(editingFinished()), this, SLOT(userChanged()));
+    connect(ui->leaveComboBox, SIGNAL(activated(int)), this, SLOT(leaveDropDownActivated(int)));
     connect(&m_Greeter, SIGNAL(showPrompt(QString, QLightDM::Greeter::PromptType)), this, SLOT(onPrompt(QString, QLightDM::Greeter::PromptType)));
     connect(&m_Greeter, SIGNAL(authenticationComplete()), this, SLOT(authenticationComplete()));
 
@@ -130,6 +124,15 @@ void LoginForm::userChanged()
     }
 }
 
+void LoginForm::leaveDropDownActivated(int index)
+{
+    QString actionName = ui->leaveComboBox->itemData(index).toString();
+    if      (actionName == "shutdown") power.shutdown();
+    else if (actionName == "restart") power.restart();
+    else if (actionName == "hibernate") power.hibernate();
+    else if (actionName == "suspend") power.suspend();
+}
+
 void LoginForm::respond()
 {
     m_Greeter.respond(ui->passwordInput->text().trimmed());
@@ -144,11 +147,11 @@ void LoginForm::onPrompt(QString prompt, QLightDM::Greeter::PromptType promptTyp
 }
 
 
-void LoginForm::addLeaveEntry(QString iconName, QString text, const char* slot)
+void LoginForm::addLeaveEntry(bool canDo, QString iconName, QString text, QString actionName)
 {
-    QMenu* menu = ui->leaveButton->menu();
-    QAction *action = menu->addAction(QIcon::fromTheme(iconName), text);
-    connect(action, SIGNAL(triggered(bool)), &power, slot);
+    if (canDo) {
+        ui->leaveComboBox->addItem(QIcon::fromTheme(iconName), text, actionName);
+    }
 }
 
 QString LoginForm::currentSession()

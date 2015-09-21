@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>340</height>
+    <width>347</width>
+    <height>346</height>
    </rect>
   </property>
   <property name="font">
@@ -231,26 +231,28 @@ QComboBox::down-arrow {
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QPushButton" name="leaveButton">
+       <widget class="QComboBox" name="leaveComboBox">
         <property name="minimumSize">
          <size>
-          <width>60</width>
+          <width>80</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>60</width>
+          <width>80</width>
           <height>60</height>
          </size>
         </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="qt-lightdm-greeter.qrc">
-          <normaloff>:/resources/leaveIcon.svg</normaloff>:/resources/leaveIcon.svg</iconset>
-        </property>
+        <item>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="qt-lightdm-greeter.qrc">
+           <normaloff>:/resources/leaveIcon.svg</normaloff>:/resources/leaveIcon.svg</iconset>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
